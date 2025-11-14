@@ -1,57 +1,71 @@
-# Acceso_a_Datos
+# Proyecto: Procesamiento de Contratos Adjudicados
 
-Este repositorio contiene ejercicios y ejemplos relacionados con acceso a datos.
+Aplicación Java que procesa un XML de contratos adjudicados de la Junta de Andalucía, los carga en una base de datos MySQL y genera un XML de salida sin el campo "TIPO DE CONTRATO".
 
-Guía super sencilla para clonar este repositorio
+## Requisitos
 
-Requisitos
-- Tener Git instalado (https://git-scm.com/).
-- (Opcional) Tener una clave SSH configurada en GitHub si prefieres usar SSH.
+- Java 17 o superior
+- Maven 3.6+
+- MySQL o MariaDB
+- Base de datos `contratosdb` creada
 
-Clonar usando HTTPS (recomendado si no tienes SSH configurado)
+## Clonar el repositorio
 
-1. Abre una terminal o consola.
-2. Ejecuta:
+```bash
+git clone https://github.com/hagakure93/Acceso_a_Datos.git
+cd Acceso_a_Datos
+```
 
-   git clone https://github.com/hagakure93/Acceso_a_Datos.git
+## Configuración
 
-3. Entra al directorio:
+1. **Crear la base de datos:**
+   ```sql
+   CREATE DATABASE contratosdb;
+   ```
 
-   cd Acceso_a_Datos
+2. **Configurar las credenciales** en `app/src/main/resources/application.properties`:
+   ```properties
+   db.url=jdbc:mysql://localhost:3306/contratosdb
+   db.user=tu_usuario
+   db.password=tu_contraseña
+   input.xml=contratos-adjudicados-jun-25.xml
+   output.xml=salida-contratos-sin-tipo.xml
+   ```
 
-Clonar usando SSH (si tienes una clave SSH configurada)
+## Ejecutar la aplicación
 
-1. Abre una terminal o consola.
-2. Ejecuta:
+1. **Navegar al directorio `app`:**
+   ```bash
+   cd app
+   ```
 
-   git clone git@github.com:hagakure93/Acceso_a_Datos.git
+2. **Ejecutar con Maven:**
+   ```bash
+   mvn exec:java
+   ```
 
-3. Entra al directorio:
+3. **O compilar y ejecutar:**
+   ```bash
+   mvn clean package
+   java -jar target/contratos-app-1.0.0-SNAPSHOT.jar
+   ```
 
-   cd Acceso_a_Datos
+## Resultado
 
-Comandos útiles después de clonar
-- Ver el estado del repositorio: git status
-- Obtener cambios remotos: git pull origin main
-- Crear una rama nueva: git checkout -b mi-rama
-- Subir cambios a tu rama: git push origin mi-rama
+- Los datos se cargan en la tabla `contratos` de la base de datos `contratosdb`
+- Se genera el archivo `app/salida-contratos-sin-tipo.xml` sin el campo "TIPO DE CONTRATO"
 
-Abrir el proyecto en Visual Studio Code
-- Desde el directorio del proyecto: code .
+## Estructura del proyecto
 
-¿Problemas al clonar?
-- Error de permiso/403 con HTTPS: asegúrate de que la URL sea correcta o prueba con SSH.
-- Error de permiso con SSH: revisa que tu clave pública esté añadida a GitHub (https://github.com/settings/keys).
+```
+app/
+├── pom.xml                          # Configuración Maven
+├── src/main/java/                   # Código fuente Java
+├── src/main/resources/              # Configuración y XML de entrada
+└── salida-contratos-sin-tipo.xml    # XML de salida generado
+```
 
-Contribuir
-1. Haz un fork del repositorio (si no tienes permisos de escritura).
-2. Crea una rama para tu cambio: git checkout -b mi-mejora
-3. Haz commits claros y descriptivos.
-4. Sube tu rama y abre un pull request desde GitHub.
+## Documentación
 
-Contacto
-- Si necesitas ayuda, abre un Issue en el repositorio.
-
----
-
-Archivo generado automáticamente: README con guía de clonación.
+- `enunciado.md`: Enunciado del proyecto
+- `resumen.md`: Documentación técnica completa
